@@ -1,9 +1,7 @@
 import { ExtendedWineData } from "../../interfaces/ExtendedWineData";
-import {
-  calculateMean,
-  calculateMedian,
-  calculateMode,
-} from "../../utils/utils";
+import MeanTab from "../MeanTab/MeanTab";
+import MedianTab from "../MedianTab/MedianTab";
+import ModeTab from "../ModeTab/ModeTab";
 import "./Table.css";
 
 const Table = (props: {
@@ -28,51 +26,9 @@ const Table = (props: {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td className="border p-5 py-8">
-              {measureKey}
-              <br />
-              Mean
-            </td>
-            {[...wineData.keys()].map((value: number) => {
-              return (
-                <td key={value} className="border">
-                  {calculateMean(wineData.get(value) as ExtendedWineData[], measureKey)}
-                </td>
-              );
-            })}
-          </tr>
-          <tr>
-            <td className="border p-5  py-8">
-              {measureKey}
-              <br />
-              Median
-            </td>
-            {[...wineData.keys()].map((value: number) => {
-              return (
-                <td key={value} className="border">
-                  {calculateMedian(
-                    wineData.get(value) as ExtendedWineData[],
-                    measureKey
-                  )}
-                </td>
-              );
-            })}
-          </tr>
-          <tr>
-            <td className="border p-5  py-8">
-              {measureKey}
-              <br />
-              Mode
-            </td>
-            {[...wineData.keys()].map((value: number) => {
-              return (
-                <td key={value} className="border">
-                  {calculateMode(wineData.get(value) as ExtendedWineData[], measureKey)}
-                </td>
-              );
-            })}
-          </tr>
+          <MeanTab measureKey={measureKey} wineData={wineData} />
+          <MedianTab measureKey={measureKey} wineData={wineData} />
+          <ModeTab measureKey={measureKey} wineData={wineData} />
         </tbody>
       </table>
     </>

@@ -105,7 +105,9 @@ export function calculateMedian<T>(array: T[], key: keyof T): number | null {
 
   if (length % 2 === 0) {
     // If the number of elements is even, calculate the average of the two middle values
-    return (sortedArray[middle - 1] + sortedArray[middle]) / 2;
+    return Number(
+      ((sortedArray[middle - 1] + sortedArray[middle]) / 2).toFixed(3)
+    );
   } else {
     // If the number of elements is odd, the median is the middle value
     return Number(sortedArray[middle].toFixed(3));
