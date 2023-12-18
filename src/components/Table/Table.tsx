@@ -1,29 +1,27 @@
-import wineJSONData from "../../assets/wineData.json";
-import { WineData } from "../../interfaces/WineData";
+import { ExtendedWineData } from "../../interfaces/ExtendedWineData";
 import {
   calculateMean,
   calculateMedian,
   calculateMode,
-  groupByAlcohol,
 } from "../../utils/utils";
-import "./FlavanoidsTable.css";
+import "./Table.css";
 
-const FlavanoidsTable = () => {
-  const wineData: Map<number, WineData[]> = groupByAlcohol(
-    wineJSONData as WineData[]
-  );
-
+const Table = (props: {
+  measureKey: keyof ExtendedWineData;
+  wineData: Map<number, ExtendedWineData[]>;
+}) => {
+  const { measureKey, wineData } = props;
   return (
     <>
-      <table cellSpacing={0}>
+      <table cellSpacing={0} border={1}>
         <thead>
           <tr>
-            <th className="border">Measure</th>
+            <th className="border mw-5">Measure</th>
             {Array.from(wineData.keys()).map((value: number) => {
               return (
                 <th
                   key={value}
-                  className="border p-5 px-10"
+                  className="border p-5 px-10 mw-5"
                 >{`Class ${value}`}</th>
               );
             })}
@@ -31,25 +29,22 @@ const FlavanoidsTable = () => {
         </thead>
         <tbody>
           <tr>
-            <td className="border p-5">
-              Flavanoids
+            <td className="border p-5 py-8">
+              {measureKey}
               <br />
               Mean
             </td>
             {[...wineData.keys()].map((value: number) => {
               return (
                 <td key={value} className="border">
-                  {calculateMean(
-                    wineData.get(value) as WineData[],
-                    "Flavanoids"
-                  )}
+                  {calculateMean(wineData.get(value) as ExtendedWineData[], measureKey)}
                 </td>
               );
             })}
           </tr>
           <tr>
-            <td className="border p-5">
-              Flavanoids
+            <td className="border p-5  py-8">
+              {measureKey}
               <br />
               Median
             </td>
@@ -57,26 +52,23 @@ const FlavanoidsTable = () => {
               return (
                 <td key={value} className="border">
                   {calculateMedian(
-                    wineData.get(value) as WineData[],
-                    "Flavanoids"
+                    wineData.get(value) as ExtendedWineData[],
+                    measureKey
                   )}
                 </td>
               );
             })}
           </tr>
           <tr>
-            <td className="border p-5">
-              Flavanoids
+            <td className="border p-5  py-8">
+              {measureKey}
               <br />
               Mode
             </td>
             {[...wineData.keys()].map((value: number) => {
               return (
                 <td key={value} className="border">
-                  {calculateMode(
-                    wineData.get(value) as WineData[],
-                    "Flavanoids"
-                  )}
+                  {calculateMode(wineData.get(value) as ExtendedWineData[], measureKey)}
                 </td>
               );
             })}
@@ -87,4 +79,4 @@ const FlavanoidsTable = () => {
   );
 };
 
-export default FlavanoidsTable;
+export default Table;
